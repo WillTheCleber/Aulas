@@ -1,0 +1,103 @@
+from functools import reduce
+
+clientes = "Base", "Roberto", "João", "Carlos"
+mensalidade= [55.9,55.9,55.9,55.9]
+
+def soma(x,y):
+    return x + y
+y=0
+    
+aumento= lambda x,y : x+y
+desconto= lambda x,y : x-y
+
+print('''1- Adicionar compra
+2- Dar desconto 
+3- Aumentar mensalidade
+4- Verificação de conta
+5- Buscador de usuário
+
+9- Para sair''')
+
+opcao= int(input("selecione uma opção: "))
+
+
+while opcao != 9:
+
+    #COMPRA - adicionando uma compra a um usuario
+    if opcao == 1:
+        for i,cliente in enumerate(clientes):
+            print(i,cliente)
+        subopcao= int(input("Selecione um cliente: "))
+        if subopcao == 0:
+            print("Opção Invalida")
+            break
+        valor= float(input('Digite o valor: '))
+        mensalidade[subopcao]= aumento(mensalidade[subopcao],valor)
+        print("Compra efetuada com sucesso.")
+        print(mensalidade)
+ ##############################################################################
+ 
+    #DESCONTO - dando um desconto ao usuario
+    elif opcao == 2:
+        for i,cliente in enumerate(clientes):
+            print(i,cliente)
+        subopcao= int(input("Selecione um cliente: "))
+        if subopcao == 0:
+            print("Opção Invalida")
+            break
+        valor= float(input('Digite o valor: '))
+        mensalidade[subopcao]= desconto(mensalidade[subopcao],valor)
+        print("Desconto efetuada com sucesso.")
+        print(mensalidade)            
+##############################################################################
+
+    #AUMENTO - Aumentando a mensalidade:
+    elif opcao == 3:
+        subopcao= int(input('Forma de aumento (1- Porcentagem | 2- Bruto)'))
+        if subopcao == 1:
+             porcentagem= float(input('Digite a porcentagem: '))
+             valor= float((mensalidade[0]* porcentagem) /100)
+             mensalidade = list(map(aumento(mensalidade,valor),mensalidade))
+             print(mensalidade)
+
+
+
+        elif subopcao == 2:
+            #y= float(input('digite um valor: '))
+            print(list(map(soma(y= float(input('digite um valor: '))), mensalidade)))
+##############################################################################
+
+    #VERIFICAÇÃO DE SALDO
+    elif opcao == 4:
+        print('''1- Verificar conta total do mês
+2- Verificar conta com maior divida''')
+        subopcao= int(input('Digite a opção desejada:'))
+        if subopcao == 1:
+            print(reduce(soma,mensalidade))
+
+
+        elif subopcao == 2:
+            testamaior = lambda x,y : x if (x>y) else y
+            print(reduce(testamaior,mensalidade))
+            
+##############################################################################
+
+
+
+
+
+
+
+    print('''1- Adicionar compra
+2- Dar desconto 
+3- Aumentar mensalidade
+4- Verificação de conta
+5- Buscador de usuário
+
+9- Para sair''')
+    opcao= int(input("selecione uma opção: "))
+        
+
+
+
+    
