@@ -1,15 +1,23 @@
+#Um programa de registro de mensalidade e nome com um sistema de menu feito em while
+
 from functools import reduce
 
-clientes = "Base", "Roberto", "João", "Carlos"
+
+##BASE DE DADOS:
+clientes = "Base", "Roberto", "João", "Carlos" #Quero deixar a base como indice 0 e inalteravel para ficar mais facil de aumentar mensalidade
 mensalidade= [55.9,55.9,55.9,55.9]
 
-def soma(x,y):
+
+##FUNÇÕES
+y=0.0
+def soma(x):
     return x + y
-y=0
-    
+
 aumento= lambda x,y : x+y
 desconto= lambda x,y : x-y
 
+
+##OPÇÕES DO MENU
 print('''1- Adicionar compra
 2- Dar desconto 
 3- Aumentar mensalidade
@@ -20,19 +28,21 @@ print('''1- Adicionar compra
 
 opcao= int(input("selecione uma opção: "))
 
-
+#COMEÇO DO MENU
 while opcao != 9:
 
     #COMPRA - adicionando uma compra a um usuario
     if opcao == 1:
         for i,cliente in enumerate(clientes):
-            print(i,cliente)
+            print(i,cliente) #PRINTA USUARIOS
         subopcao= int(input("Selecione um cliente: "))
         if subopcao == 0:
             print("Opção Invalida")
-            break
+            break #aqui estou definindo que caso tente aumentar a base saia do laço
+        
         valor= float(input('Digite o valor: '))
-        mensalidade[subopcao]= aumento(mensalidade[subopcao],valor)
+
+        mensalidade[subopcao]= aumento(mensalidade[subopcao],valor) #FUNÇÃO PARA AUMENTO
         print("Compra efetuada com sucesso.")
         print(mensalidade)
  ##############################################################################
@@ -40,48 +50,66 @@ while opcao != 9:
     #DESCONTO - dando um desconto ao usuario
     elif opcao == 2:
         for i,cliente in enumerate(clientes):
-            print(i,cliente)
-        subopcao= int(input("Selecione um cliente: "))
+            print(i,cliente) #PRINTAR USUARIOS
+        subopcao= int(input("Selecione um cliente: ")) #SELEÇÃO
         if subopcao == 0:
             print("Opção Invalida")
-            break
+            break #aqui estou definindo que caso tente aumentar a base saia do laço
         valor= float(input('Digite o valor: '))
-        mensalidade[subopcao]= desconto(mensalidade[subopcao],valor)
+        mensalidade[subopcao]= desconto(mensalidade[subopcao],valor) #FUNÇÃO PARA DESCONTO
         print("Desconto efetuada com sucesso.")
         print(mensalidade)            
 ##############################################################################
 
     #AUMENTO - Aumentando a mensalidade:
     elif opcao == 3:
-        subopcao= int(input('Forma de aumento (1- Porcentagem | 2- Bruto)'))
+        subopcao= int(input('Forma de aumento (1- Porcentagem | 2- Bruto)')) #SUBMENU PARA TER UM CALCULO "COMPLEXO" E UM SIMPLES
+
+        #AUMENTO PORCENTAGEM
         if subopcao == 1:
              porcentagem= float(input('Digite a porcentagem: '))
-             valor= float((mensalidade[0]* porcentagem) /100)
-             mensalidade = list(map(aumento(mensalidade,valor),mensalidade))
+             y= float((mensalidade[0]* porcentagem) /100) #Calculo que define % -R3
+             mensalidade = list(map(soma, mensalidade))
              print(mensalidade)
 
 
-
+        #AUMENTO BRUTO
         elif subopcao == 2:
-            #y= float(input('digite um valor: '))
-            print(list(map(soma(y= float(input('digite um valor: '))), mensalidade)))
-##############################################################################
+            y= float(input('digite um valor: '))
+            print(type(mensalidade))
+            mensalidade= print(list(map(soma, mensalidade)))
 
+
+
+##############################################################################
     #VERIFICAÇÃO DE SALDO
     elif opcao == 4:
         print('''1- Verificar conta total do mês
 2- Verificar conta com maior divida''')
+        
         subopcao= int(input('Digite a opção desejada:'))
+
+        #VERIFICAR SOMA TOTAL DO MÊS:
         if subopcao == 1:
             print(reduce(soma,mensalidade))
 
-
+        #VERIFICAR MAIOR CONTA:
         elif subopcao == 2:
-            testamaior = lambda x,y : x if (x>y) else y
-            print(reduce(testamaior,mensalidade))
+            #AQUI ESTOU PEGANDO O MAIOR VALOR DA LISTA E DEPOIS PEGANDO O INDICE PARA VER O CLIENTE QUE CORRESPONDE
+            testamaior = lambda x,y : x if (x>y) else y 
+            item= reduce(testamaior, mensalidade) 
+            indice= mensalidade.index(item)
+            print("A maior conta pertence ao cliente ", clientes[indice], " com o total a pagar de ", item)
+            
             
 ##############################################################################
+    elif opcao == 5:
 
+        b=str(input("Digite o nome ou a conta que deseja visualizar: "))
+        if b in clientes:
+            print(list(filter(lambda x: x == "Pedro",clientes)))
+ #       else:
+            
 
 
 
